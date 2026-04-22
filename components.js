@@ -3,8 +3,8 @@ function renderNav(activePage) {
   return `
   <div class="topbar">
     <div class="topbar-inner">
-      <span>✉️ sales@hmfsolutionsllc.com</span>
-      <a href="tel:+12167773930">📞 Call Us: 216 777 3930</a>
+      <span>✉️ hmfsolutionsllc.com@hmfsolutionsllc.com</span>
+      <a href="tel:+16783839680">📞 Call Us: 678 383 9680</a>
     </div>
   </div>
   <nav>
@@ -61,9 +61,9 @@ function renderFooter() {
       </div>
       <div class="footer-col">
         <h4>Contact Us</h4>
-        <div class="footer-contact-row"><span class="ico">📍</span><span>3900 Park East Drive, Suite 101, Beachwood Ohio 44122</span></div>
-        <div class="footer-contact-row"><span class="ico">✉️</span><span>sales@hmfsolutionsllc.com</span></div>
-        <div class="footer-contact-row"><span class="ico">📞</span><span>216-777-3930</span></div>
+        <div class="footer-contact-row"><span class="ico">📍</span><span>2152 Northlake Pkwy Apt 310, Tucker, GA 30084</span></div>
+        <div class="footer-contact-row"><span class="ico">✉️</span><span>hmfsolutionsllc.com@hmfsolutionsllc.com</span></div>
+        <div class="footer-contact-row"><span class="ico">📞</span><span>678-383-9680</span></div>
       </div>
       <div class="footer-col">
         <h4>Our Services</h4>

@@ -767,7 +767,7 @@
     <button class="checkout-btn" onclick="checkout()">
       ✅ Proceed to Checkout
     </button>
-    <p class="cart-note">📞 Or call us: <a href="tel:+12167773930" style="color:var(--blue);font-weight:700;">216-777-3930</a> to order by phone</p>
+    <p class="cart-note">📞 Or call us: <a href="tel:+16783839680" style="color:var(--blue);font-weight:700;">678-383-9680</a> to order by phone</p>
   </div>
 </div>
 
@@ -866,7 +866,7 @@
     if (cart.length === 0) return;
     const total = cart.reduce((s, i) => s + i.price, 0);
     const items = cart.map(i => i.name).join(', ');
-    alert(`✅ Order Confirmed!\n\nPlans: ${items}\nMonthly Total: $${total}/mo\n\nOur team will call you within 24 hours to complete your order.\n\nOr call us now: 216-777-3930`);
+    alert(`✅ Order Confirmed!\n\nPlans: ${items}\nMonthly Total: $${total}/mo\n\nOur team will call you within 24 hours to complete your order.\n\nOr call us now: 678-383-9680`);
   }
 
   function showToast(msg) {
