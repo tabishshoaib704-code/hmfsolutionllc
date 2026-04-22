@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Internet & Cable TV Services – HMF Solutions LLC</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ===== INTERNET PAGE SPECIFIC ===== */
+
+/* FILTER TABS */
+.filter-bar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-bar span { font-weight: 700; font-size: 14px; color: var(--navy); margin-right: 6px; }
+.filter-btn {
+  padding: 8px 20px;
+  border-radius: 30px;
+  border: 2px solid var(--gray-light);
+  background: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all .2s;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+/* PLANS GRID */
+.plans-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 70px;
+}
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+/* PLAN CARD */
+.plan-card {
+  background: #fff;
+  border: 2px solid var(--gray-light);
+  border-radius: 18px;
+  padding: 0;
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.plan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(26,111,196,.13);
+  border-color: var(--blue);
+}
+.plan-card.featured {
+  border-color: var(--blue);
+  box-shadow: 0 8px 32px rgba(26,111,196,.18);
+}
+.badge {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: linear-gradient(135deg, var(--blue), var(--accent));
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.plan-header {
+  padding: 28px 26px 20px;
+  border-bottom: 1px solid var(--gray-light);
+}
+.plan-type {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.plan-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 14px;
+}
+.plan-price {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.plan-price .dollar { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+.plan-price .amount { font-family: 'Poppins', sans-serif; font-size: 42px; font-weight: 900; color: var(--navy); line-height: 1; }
+.plan-price .period { font-size: 14px; color: var(--gray); margin-bottom: 6px; }
+.plan-note { font-size: 11.5px; color: var(--gray); }
+
+/* PLAN BODY */
+.plan-body { padding: 20px 26px 24px; flex: 1; display: flex; flex-direction: column; }
+.plan-speed {
+  background: var(--light-bg);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.plan-speed .speed-num { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 800; color: var(--blue); }
+.plan-speed .speed-label { font-size: 12px; color: var(--gray); font-weight: 600; }
+.plan-features { flex: 1; margin-bottom: 20px; }
+.plan-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 0;
+  font-size: 13.5px;
+  color: var(--text);
+  border-bottom: 1px solid var(--gray-light);
+}
+.plan-features li:last-child { border: none; }
+.plan-features li .check { color: #27ae60; font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+.plan-features li .cross { color: #e74c3c; font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+
+/* ADD TO CART BTN */
+.add-cart-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 12px;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.add-cart-btn.primary {
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(26,111,196,.3);
+}
+.add-cart-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,111,196,.4); }
+.add-cart-btn.outline {
+  background: #fff;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+}
+.add-cart-btn.outline:hover { background: var(--blue); color: #fff; }
+.add-cart-btn.added {
+  background: linear-gradient(135deg, #27ae60, #2ecc71) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+/* ===== CART SIDEBAR ===== */
+.cart-fab {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  background: linear-gradient(135deg, var(--blue), var(--accent));
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 22px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(26,111,196,.4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 999;
+  transition: transform .2s, box-shadow .2s;
+}
+.cart-fab:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(26,111,196,.5); }
+.cart-fab .cart-count {
+  background: #fff;
+  color: var(--blue);
+  border-radius: 50%;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+/* CART DRAWER */
+.cart-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 1000;
+  display: none;
+  backdrop-filter: blur(2px);
+}
+.cart-overlay.open { display: block; }
+.cart-drawer {
+  position: fixed;
+  top: 0; right: -460px;
+  width: 460px;
+  max-width: 100vw;
+  height: 100vh;
+  background: #fff;
+  z-index: 1001;
+  box-shadow: -8px 0 40px rgba(0,0,0,.15);
+  transition: right .35s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+}
+.cart-drawer.open { right: 0; }
+.cart-drawer-header {
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cart-drawer-header h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.cart-close {
+  background: var(--light-bg);
+  border: none;
+  border-radius: 8px;
+  width: 36px; height: 36px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.cart-close:hover { background: var(--gray-light); }
+.cart-items { flex: 1; overflow-y: auto; padding: 16px 24px; }
+.cart-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray);
+}
+.cart-empty .icon { font-size: 52px; margin-bottom: 14px; }
+.cart-empty p { font-size: 15px; font-weight: 600; }
+.cart-item {
+  background: var(--light-bg);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  animation: slideIn .25s ease;
+}
+@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+.cart-item-icon {
+  width: 44px; height: 44px; min-width: 44px;
+  background: linear-gradient(135deg, var(--blue), var(--accent));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.cart-item-info { flex: 1; }
+.cart-item-info h4 { font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+.cart-item-info .type { font-size: 11px; color: var(--blue); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.cart-item-info .price { font-size: 16px; font-weight: 800; color: var(--navy); }
+.cart-item-info .price span { font-size: 12px; font-weight: 600; color: var(--gray); }
+.cart-remove {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background .2s;
+  line-height: 1;
+}
+.cart-remove:hover { background: #fdecea; }
+.cart-footer {
+  padding: 20px 24px;
+  border-top: 1px solid var(--gray-light);
+}
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.cart-total span { font-size: 14px; color: var(--gray); font-weight: 600; }
+.cart-total strong { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 900; color: var(--navy); }
+.checkout-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s, transform .2s;
+  box-shadow: 0 4px 14px rgba(26,111,196,.3);
+}
+.checkout-btn:hover { opacity: .9; transform: translateY(-1px); }
+.cart-note { font-size: 12px; color: var(--gray); text-align: center; margin-top: 10px; }
+
+/* BUNDLE SECTION */
+.bundle-section {
+  background: linear-gradient(135deg, var(--navy), #163d6e);
+  padding: 70px 24px;
+  color: #fff;
+}
+.bundle-inner { max-width: 1200px; margin: 0 auto; }
+.bundle-inner .section-label { color: var(--accent); }
+.bundle-inner h2 { font-family: 'Poppins', sans-serif; font-size: clamp(24px,3.5vw,36px); font-weight: 800; margin-bottom: 14px; }
+.bundle-inner p { font-size: 15px; opacity: .85; margin-bottom: 40px; max-width: 600px; }
+.bundles-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.bundle-card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: background .25s, transform .25s;
+  cursor: default;
+}
+.bundle-card:hover { background: rgba(255,255,255,.12); transform: translateY(-3px); }
+.bundle-card.popular { border-color: var(--accent); background: rgba(0,194,203,.08); }
+.bundle-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+.bundle-card h3 { font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+.bundle-card .bundle-price { font-family: 'Poppins', sans-serif; font-size: 32px; font-weight: 900; color: var(--accent); margin-bottom: 16px; }
+.bundle-card .bundle-price span { font-size: 14px; color: rgba(255,255,255,.6); font-weight: 600; }
+.bundle-features li { display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 6px 0; opacity: .9; border-bottom: 1px solid rgba(255,255,255,.07); }
+.bundle-features li:last-child { border: none; }
+.bundle-features li::before { content: '✓'; color: var(--accent); font-weight: 900; flex-shrink: 0; }
+.bundle-add-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--accent), #00a8b0);
+  color: var(--navy);
+  border: none;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity .2s, transform .2s;
+}
+.bundle-add-btn:hover { opacity: .9; transform: translateY(-2px); }
+.bundle-add-btn.added { background: #27ae60; color: #fff; }
+
+/* SECTION DIVIDER */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 24px 20px;
+}
+.section-divider h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(20px,2.5vw,28px);
+  font-weight: 800;
+  color: var(--navy);
+  white-space: nowrap;
+}
+.divider-line { flex: 1; height: 2px; background: var(--gray-light); }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 100px; right: 28px;
+  background: var(--navy);
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all .3s;
+  pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+@media(max-width:900px){
+  .plans-grid { grid-template-columns: 1fr 1fr; }
+  .bundles-grid { grid-template-columns: 1fr; }
+}
+@media(max-width:600px){
+  .plans-grid { grid-template-columns: 1fr; }
+  .cart-drawer { width: 100vw; }
+}
+</style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="tag">🌐 New Services</div>
+  <h1>Internet & Cable TV Services</h1>
+  <p>High-speed internet and premium cable TV plans — pick what works for you and add to cart instantly.</p>
+  <div class="breadcrumb">
+    <a href="index.html">HMF Solutions LLC</a>
+    <span>›</span>
+    Internet & Cable TV Services
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span>Filter:</span>
+  <button class="filter-btn active" onclick="filterPlans('all', this)">All Plans</button>
+  <button class="filter-btn" onclick="filterPlans('internet', this)">🌐 Internet Only</button>
+  <button class="filter-btn" onclick="filterPlans('cable', this)">📺 Cable TV Only</button>
+  <button class="filter-btn" onclick="filterPlans('bundle', this)">📦 Bundles</button>
+</div>
+
+<!-- ===== INTERNET PLANS ===== -->
+<div class="section-divider" data-category="internet">
+  <h2>🌐 Internet Plans</h2>
+  <div class="divider-line"></div>
+</div>
+
+<div class="plans-section">
+  <div class="plans-grid" id="internet-plans">
+
+    <!-- Basic -->
+    <div class="plan-card" data-category="internet">
+      <div class="plan-header">
+        <div class="plan-type">Internet</div>
+        <div class="plan-name">Basic Broadband</div>
+        <div class="plan-price">
+          <span class="dollar">$</span>
+          <span class="amount">29</span>
+          <span class="period">/mo</span>
+        </div>
+        <div class="plan-note">+ taxes & fees. 12-month contract.</div>
+      </div>
+      <div class="plan-body">
+        <div class="plan-speed">
+          <div>
+            <div class="speed-num">100 Mbps</div>
+            <div class="speed-label">Download Speed</div>
+          </div>
+          <span style="font-size:24px;margin-left:auto">⚡</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> 100 Mbps download speed</li>
+          <li><span class="check">✓</span> 20 Mbps upload speed</li>
+          <li><span class="check">✓</span> Unlimited data</li>
+          <li><span class="check">✓</span> Free modem included</li>
+          <li><span class="cross">✗</span> WiFi router not included</li>
+          <li><span class="cross">✗</span> No priority support</li>
+        </ul>
+        <button class="add-cart-btn outline" onclick="addToCart(this, 'Basic Broadband', 29, 'internet', '100 Mbps')">
+          🛒 Add to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Standard — Featured -->
+    <div class="plan-card featured" data-category="internet">
+      <div class="badge">Most Popular</div>
+      <div class="plan-header">
+        <div class="plan-type">Internet</div>
+        <div class="plan-name">Standard Fiber</div>
+        <div class="plan-price">
+          <span class="dollar">$</span>
+          <span class="amount">49</span>
+          <span class="period">/mo</span>
+        </div>
+        <div class="plan-note">+ taxes & fees. No annual contract.</div>
+      </div>
+      <div class="plan-body">
+        <div class="plan-speed">
+          <div>
+            <div class="speed-num">500 Mbps</div>
+            <div class="speed-label">Download Speed</div>
+          </div>
+          <span style="font-size:24px;margin-left:auto">🚀</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> 500 Mbps download speed</li>
+          <li><span class="check">✓</span> 100 Mbps upload speed</li>
+          <li><span class="check">✓</span> Unlimited data</li>
+          <li><span class="check">✓</span> Free modem + WiFi router</li>
+          <li><span class="check">✓</span> 24/7 priority support</li>
+          <li><span class="cross">✗</span> No static IP</li>
+        </ul>
+        <button class="add-cart-btn primary" onclick="addToCart(this, 'Standard Fiber', 49, 'internet', '500 Mbps')">
+          🛒 Add to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Gigabit -->
+    <div class="plan-card" data-category="internet">
+      <div class="plan-header">
+        <div class="plan-type">Internet</div>
+        <div class="plan-name">Gigabit Pro</div>
+        <div class="plan-price">
+          <span class="dollar">$</span>
+          <span class="amount">79</span>
+          <span class="period">/mo</span>
+        </div>
+        <div class="plan-note">+ taxes & fees. No annual contract.</div>
+      </div>
+      <div class="plan-body">
+        <div class="plan-speed">
+          <div>
+            <div class="speed-num">1 Gbps</div>
+            <div class="speed-label">Download Speed</div>
+          </div>
+          <span style="font-size:24px;margin-left:auto">💎</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> 1 Gbps download speed</li>
+          <li><span class="check">✓</span> 500 Mbps upload speed</li>
+          <li><span class="check">✓</span> Unlimited data</li>
+          <li><span class="check">✓</span> Free modem + WiFi 6 router</li>
+          <li><span class="check">✓</span> 24/7 dedicated support</li>
+          <li><span class="check">✓</span> Static IP included</li>
+        </ul>
+        <button class="add-cart-btn outline" onclick="addToCart(this, 'Gigabit Pro', 79, 'internet', '1 Gbps')">
+          🛒 Add to Cart
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /internet plans -->
+
+  <!-- ===== CABLE TV PLANS ===== -->
+  <div class="section-divider" data-category="cable" style="padding-top:20px;">
+    <h2>📺 Cable TV Plans</h2>
+    <div class="divider-line"></div>
+  </div>
+  <div style="height:20px"></div>
+
+  <div class="plans-grid" id="cable-plans">
+
+    <!-- Basic TV -->
+    <div class="plan-card" data-category="cable">
+      <div class="plan-header">
+        <div class="plan-type">Cable TV</div>
+        <div class="plan-name">Basic TV</div>
+        <div class="plan-price">
+          <span class="dollar">$</span>
+          <span class="amount">25</span>
+          <span class="period">/mo</span>
+        </div>
+        <div class="plan-note">+ taxes & fees. 12-month contract.</div>
+      </div>
+      <div class="plan-body">
+        <div class="plan-speed" style="background:#fff8e1;">
+          <div>
+            <div class="speed-num" style="color:#e67e22;">60+ Ch</div>
+            <div class="speed-label">Channels Included</div>
+          </div>
+          <span style="font-size:24px;margin-left:auto">📺</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> 60+ local & basic channels</li>
+          <li><span class="check">✓</span> HD quality included</li>
+          <li><span class="check">✓</span> Free set-top box</li>
+          <li><span class="cross">✗</span> No premium channels</li>
+          <li><span class="cross">✗</span> No DVR service</li>
+          <li><span class="cross">✗</span> No on-demand library</li>
+        </ul>
+        <button class="add-cart-btn outline" onclick="addToCart(this, 'Basic TV', 25, 'cable', '60+ Channels')">
+          🛒 Add to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Premium TV — Featured -->
+    <div class="plan-card featured" data-category="cable">
+      <div class="badge">Best Value</div>
+      <div class="plan-header">
+        <div class="plan-type">Cable TV</div>
+        <div class="plan-name">Premium TV</div>
+        <div class="plan-price">
+          <span class="dollar">$</span>
+          <span class="amount">55</span>
+          <span class="period">/mo</span>
+        </div>
+        <div class="plan-note">+ taxes & fees. No annual contract.</div>
+      </div>
+      <div class="plan-body">
+        <div class="plan-speed" style="background:#fff8e1;">
+          <div>
+            <div class="speed-num" style="color:#e67e22;">150+ Ch</div>
+            <div class="speed-label">Channels Included</div>
+          </div>
+          <span style="font-size:24px;margin-left:auto">🎬</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> 150+ channels incl. sports</li>
+          <li><span class="check">✓</span> 4K Ultra HD on select channels</li>
+          <li><span class="check">✓</span> Free set-top box</li>
+          <li><span class="check">✓</span> Premium channels (HBO, Showtime)</li>
+          <li><span class="check">✓</span> Cloud DVR – 100 hrs storage</li>
+          <li><span class="cross">✗</span> No multi-room DVR</li>
+        </ul>
+        <button class="add-cart-btn primary" onclick="addToCart(this, 'Premium TV', 55, 'cable', '150+ Channels')">
+          🛒 Add to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Ultimate TV -->
+    <div class="plan-card" data-category="cable">
+      <div class="plan-header">
+        <div class="plan-type">Cable TV</div>
+        <div class="plan-name">Ultimate TV</div>
+        <div class="plan-price">
+          <span class="dollar">$</span>
+          <span class="amount">85</span>
+          <span class="period">/mo</span>
+        </div>
+        <div class="plan-note">+ taxes & fees. No annual contract.</div>
+      </div>
+      <div class="plan-body">
+        <div class="plan-speed" style="background:#fff8e1;">
+          <div>
+            <div class="speed-num" style="color:#e67e22;">250+ Ch</div>
+            <div class="speed-label">Channels Included</div>
+          </div>
+          <span style="font-size:24px;margin-left:auto">🏆</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> 250+ channels incl. all sports</li>
+          <li><span class="check">✓</span> 4K Ultra HD everywhere</li>
+          <li><span class="check">✓</span> 3 set-top boxes included</li>
+          <li><span class="check">✓</span> All premium channels</li>
+          <li><span class="check">✓</span> Cloud DVR – 500 hrs storage</li>
+          <li><span class="check">✓</span> Multi-room DVR included</li>
+        </ul>
+        <button class="add-cart-btn outline" onclick="addToCart(this, 'Ultimate TV', 85, 'cable', '250+ Channels')">
+          🛒 Add to Cart
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /cable plans -->
+</div><!-- /plans-section -->
+
+<!-- ===== BUNDLE SECTION ===== -->
+<section class="bundle-section" data-category="bundle">
+  <div class="bundle-inner">
+    <div class="section-label">💰 Save More</div>
+    <h2>Internet + Cable TV Bundles</h2>
+    <p>Combine internet and cable TV for the best value. Save up to $30/month compared to buying separately.</p>
+
+    <div class="bundles-grid">
+
+      <!-- Bundle 1 -->
+      <div class="bundle-card">
+        <div class="bundle-tag">Starter Bundle</div>
+        <h3>Internet + Basic TV</h3>
+        <div class="bundle-price">$49<span>/mo</span></div>
+        <ul class="bundle-features">
+          <li>100 Mbps Internet</li>
+          <li>60+ Cable TV Channels</li>
+          <li>Free modem included</li>
+          <li>HD TV quality</li>
+          <li>Save $5/mo vs separate</li>
+        </ul>
+        <button class="bundle-add-btn" onclick="addBundle(this, 'Starter Bundle', 49, '100 Mbps + 60 Ch')">
+          🛒 Add Bundle to Cart
+        </button>
+      </div>
+
+      <!-- Bundle 2 — Popular -->
+      <div class="bundle-card popular">
+        <div class="bundle-tag">⭐ Most Popular</div>
+        <h3>Fiber + Premium TV</h3>
+        <div class="bundle-price">$89<span>/mo</span></div>
+        <ul class="bundle-features">
+          <li>500 Mbps Fiber Internet</li>
+          <li>150+ Cable TV Channels</li>
+          <li>Free modem + WiFi router</li>
+          <li>4K Ultra HD TV</li>
+          <li>Cloud DVR 100 hrs</li>
+          <li>Save $15/mo vs separate</li>
+        </ul>
+        <button class="bundle-add-btn" onclick="addBundle(this, 'Fiber + Premium TV Bundle', 89, '500 Mbps + 150 Ch')">
+          🛒 Add Bundle to Cart
+        </button>
+      </div>
+
+      <!-- Bundle 3 -->
+      <div class="bundle-card">
+        <div class="bundle-tag">Ultimate Bundle</div>
+        <h3>Gigabit + Ultimate TV</h3>
+        <div class="bundle-price">$134<span>/mo</span></div>
+        <ul class="bundle-features">
+          <li>1 Gbps Gigabit Internet</li>
+          <li>250+ Cable TV Channels</li>
+          <li>WiFi 6 router included</li>
+          <li>4K everywhere + all sports</li>
+          <li>Cloud DVR 500 hrs</li>
+          <li>Save $30/mo vs separate</li>
+        </ul>
+        <button class="bundle-add-btn" onclick="addBundle(this, 'Gigabit + Ultimate TV Bundle', 134, '1 Gbps + 250 Ch')">
+          🛒 Add Bundle to Cart
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CART FAB ===== -->
+<button class="cart-fab" id="cartFab" onclick="toggleCart()" style="display:none;">
+  🛒 My Cart
+  <span class="cart-count" id="cartCount">0</span>
+</button>
+
+<!-- ===== CART DRAWER ===== -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <h3>🛒 Your Cart</h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="icon">🛒</div>
+      <p>Your cart is empty</p>
+      <p style="font-size:13px;margin-top:6px;font-weight:400;">Add a plan above to get started</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span>Monthly Total</span>
+      <strong id="cartTotal">$0</strong>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">
+      ✅ Proceed to Checkout
+    </button>
+    <p class="cart-note">📞 Or call us: <a href="tel:+12167773930" style="color:var(--blue);font-weight:700;">216-777-3930</a> to order by phone</p>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<div id="footer-placeholder"></div>
+
+<script src="components.js"></script>
+<script>
+  document.getElementById('nav-placeholder').innerHTML = renderNav('internet');
+  document.getElementById('footer-placeholder').innerHTML = renderFooter();
+
+  // ===== CART STATE =====
+  let cart = [];
+
+  function addToCart(btn, name, price, type, detail) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) { showToast('⚠️ ' + name + ' already in cart!'); return; }
+    cart.push({ name, price, type, detail, id: Date.now() });
+    btn.classList.add('added');
+    btn.textContent = '✓ Added to Cart';
+    btn.disabled = true;
+    updateCart();
+    showToast('✅ ' + name + ' added to cart!');
+  }
+
+  function addBundle(btn, name, price, detail) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) { showToast('⚠️ ' + name + ' already in cart!'); return; }
+    cart.push({ name, price, type: 'bundle', detail, id: Date.now() });
+    btn.classList.add('added');
+    btn.textContent = '✓ Added!';
+    btn.disabled = true;
+    updateCart();
+    showToast('✅ ' + name + ' added to cart!');
+  }
+
+  function removeFromCart(id) {
+    const item = cart.find(i => i.id === id);
+    cart = cart.filter(i => i.id !== id);
+    // Re-enable button
+    document.querySelectorAll('.add-cart-btn, .bundle-add-btn').forEach(btn => {
+      if (btn.textContent.includes('Added') || btn.disabled) {
+        // Try to match by data
+      }
+    });
+    // Re-enable all buttons that match removed item
+    document.querySelectorAll('[data-plan-name]').forEach(btn => {
+      if (btn.dataset.planName === item?.name) {
+        btn.classList.remove('added');
+        btn.disabled = false;
+        btn.textContent = '🛒 Add to Cart';
+      }
+    });
+    updateCart();
+    if (item) showToast('🗑️ ' + item.name + ' removed');
+  }
+
+  function updateCart() {
+    const count = cart.length;
+    const total = cart.reduce((s, i) => s + i.price, 0);
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartFab').style.display = count > 0 ? 'flex' : 'none';
+    document.getElementById('cartFooter').style.display = count > 0 ? 'block' : 'none';
+    document.getElementById('cartTotal').textContent = '$' + total + '/mo';
+
+    const icons = { internet: '🌐', cable: '📺', bundle: '📦' };
+    const container = document.getElementById('cartItems');
+
+    if (count === 0) {
+      container.innerHTML = `<div class="cart-empty"><div class="icon">🛒</div><p>Your cart is empty</p><p style="font-size:13px;margin-top:6px;font-weight:400;">Add a plan above to get started</p></div>`;
+      return;
+    }
+
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-icon">${icons[item.type] || '📦'}</div>
+        <div class="cart-item-info">
+          <div class="type">${item.type === 'bundle' ? '📦 Bundle' : item.type === 'internet' ? '🌐 Internet' : '📺 Cable TV'}</div>
+          <h4>${item.name}</h4>
+          <div style="font-size:12px;color:var(--gray);margin-bottom:4px;">${item.detail}</div>
+          <div class="price">$${item.price}<span>/mo</span></div>
+        </div>
+        <button class="cart-remove" onclick="removeFromCart(${item.id})" title="Remove">✕</button>
+      </div>
+    `).join('');
+  }
+
+  function toggleCart() {
+    document.getElementById('cartDrawer').classList.toggle('open');
+    document.getElementById('cartOverlay').classList.toggle('open');
+  }
+
+  function checkout() {
+    if (cart.length === 0) return;
+    const total = cart.reduce((s, i) => s + i.price, 0);
+    const items = cart.map(i => i.name).join(', ');
+    alert(`✅ Order Confirmed!\n\nPlans: ${items}\nMonthly Total: $${total}/mo\n\nOur team will call you within 24 hours to complete your order.\n\nOr call us now: 216-777-3930`);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // ===== FILTER =====
+  function filterPlans(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const internetSection = document.querySelector('[data-category="internet"]');
+    const cableSection = document.querySelector('[data-category="cable"]');
+    const bundleSection = document.querySelector('[data-category="bundle"]');
+    const internetPlans = document.getElementById('internet-plans');
+    const cablePlans = document.getElementById('cable-plans');
+
+    const show = (el) => el && (el.style.display = '');
+    const hide = (el) => el && (el.style.display = 'none');
+
+    if (type === 'all') {
+      show(internetSection); show(cableSection); show(bundleSection);
+      show(internetPlans); show(cablePlans);
+    } else if (type === 'internet') {
+      show(internetSection); show(internetPlans);
+      hide(cableSection); hide(cablePlans); hide(bundleSection);
+    } else if (type === 'cable') {
+      show(cableSection); show(cablePlans);
+      hide(internetSection); hide(internetPlans); hide(bundleSection);
+    } else if (type === 'bundle') {
+      show(bundleSection);
+      hide(internetSection); hide(internetPlans);
+      hide(cableSection); hide(cablePlans);
+    }
+  }
+</script>
+</body>
+</html>

@@ -17,10 +17,11 @@ function renderNav(activePage) {
         <li><a href="index.html" ${activePage==='home'?'class="active"':''}>Home</a></li>
         <li><a href="about.html" ${activePage==='about'?'class="active"':''}>About Us</a></li>
         <li>
-          <a href="healthcare.html" ${activePage==='healthcare'||activePage==='software'?'class="active"':''}>Services ▾</a>
+          <a href="healthcare.html" ${activePage==='healthcare'||activePage==='software'||activePage==='internet'?'class="active"':''}>Services ▾</a>
           <ul class="dropdown">
             <li><a href="healthcare.html">Healthcare Services</a></li>
             <li><a href="software.html">Software Solutions</a></li>
+            <li><a href="internet-services.html">🌐 Internet & Cable TV</a></li>
           </ul>
         </li>
         <li><a href="contact.html" ${activePage==='contact'?'class="active"':''}>Contact</a></li>
@@ -54,6 +55,7 @@ function renderFooter() {
           <li><a href="about.html">About Us</a></li>
           <li><a href="healthcare.html">Healthcare Services</a></li>
           <li><a href="software.html">Software Solutions</a></li>
+          <li><a href="internet-services.html">Internet & Cable TV</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
